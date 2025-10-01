@@ -1,1 +1,2 @@
-uom.property=This is the /Development profile - Updated
+uom:
+  property: This is the /Development profile

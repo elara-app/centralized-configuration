@@ -1,1 +1,2 @@
-uom.property=This is the Production profile
+uom:
+  property: This is the Production profile

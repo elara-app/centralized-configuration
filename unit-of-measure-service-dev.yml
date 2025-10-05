@@ -4,7 +4,6 @@ spring:
   cloud:
     vault:
       application-name: ${spring.application.name}
-      uri: http://localhost:8200
   datasource:
     url: jdbc:postgresql://localhost:5432/unit_of_measure_db
     driver-class-name: org.postgresql.Driver

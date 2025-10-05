@@ -24,4 +24,4 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 uom:
-  property: This is the test profile for Unit of Measure Service
+  property: This is the test profile

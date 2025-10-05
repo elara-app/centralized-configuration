@@ -26,4 +26,4 @@ eureka:
     prefer-ip-address: true
 
 uom:
-  property: This is the development profile for Unit of Measure Service
+  property: This is the development profile

@@ -1,2 +1,3 @@
-uom:
-  property: This is the Production profile
+spring:
+  application:
+    name: unit-of-measure-service

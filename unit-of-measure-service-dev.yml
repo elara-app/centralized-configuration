@@ -2,7 +2,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,busrefresh
 server:
   port: 0
 spring:
@@ -34,4 +34,4 @@ eureka:
     prefer-ip-address: true
 
 uom:
-  property: Uom Service - this is the development profile [NEW - A simple message]
+  property: Uom Service - this is the development profile

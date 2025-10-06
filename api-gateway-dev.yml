@@ -1,0 +1,11 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    metadata-map:
+      version: 1.0.0
+      environment: development
+      region: us-east
+    prefer-ip-address: true

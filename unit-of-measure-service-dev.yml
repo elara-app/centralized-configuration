@@ -34,4 +34,4 @@ eureka:
     prefer-ip-address: true
 
 uom:
-  property: Uom Service - this is the development profile
+  property: Uom Service - this is the development profile [NEW - Bus and Message Broker Configured]

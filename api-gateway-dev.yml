@@ -1,3 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: uom-service
+          uri: lb://unit-of-measure-service
+          predicates:
+            - Path=/api/v1/uom/**
+            - Path=/api/v1/uom-status/**
+            - Path=/config-server-test/uom/**
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/v1/inventory-item/**
+            - Path=/config-server-test/inventory/**
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   client:
     service-url:

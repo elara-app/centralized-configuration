@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: uom-service
-          uri: lb://unit-of-measure-service
+          uri: lb://UNIT-OF-MEASURE-SERVICE
           predicates:
             - Path=/api/v1/uom/**
             - Path=/api/v1/uom-status/**

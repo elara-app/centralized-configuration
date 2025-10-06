@@ -34,4 +34,4 @@ eureka:
     prefer-ip-address: true
 
 inventory:
-  property: Inventory Service - this is the development profile
+  property: Inventory Service - this is the development profile [NEW - Bus and Message Broker Configured]

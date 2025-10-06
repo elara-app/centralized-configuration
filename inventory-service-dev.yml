@@ -1,0 +1,29 @@
+server:
+  port: 0
+spring:
+  cloud:
+    vault:
+      application-name: ${spring.application.name}
+  datasource:
+    url: jdbc:postgresql://localhost:5432/inventory_db
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    metadata-map:
+      version: 1.0.0
+      environment: development
+      region: us-east
+    prefer-ip-address: true
+inventory:
+
+  property: Inventory Service - this is the development profile

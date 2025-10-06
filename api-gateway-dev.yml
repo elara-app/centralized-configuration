@@ -1,16 +1,10 @@
 spring:
   cloud:
     gateway:
-      routes:
-        - id: uom-service
-          uri: lb://UNIT-OF-MEASURE-SERVICE
-          predicates:
-            - Path=/api/v1/uom/**, /api/v1/uom-status/**, /config-server-test/uom/**
-        - id: inventory-service
-          uri: lb://inventory-service
-          predicates:
-            - Path=/api/v1/inventory-item/**
-            - Path=/config-server-test/inventory/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
     loadbalancer:
       ribbon:
         enabled: false

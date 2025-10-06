@@ -29,4 +29,4 @@ eureka:
     prefer-ip-address: true
 
 uom:
-  property: This is the development profile
+  property: Uom Service - this is the development profile

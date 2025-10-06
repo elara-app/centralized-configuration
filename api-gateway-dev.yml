@@ -5,9 +5,7 @@ spring:
         - id: uom-service
           uri: lb://UNIT-OF-MEASURE-SERVICE
           predicates:
-            - Path=/api/v1/uom/**
-            - Path=/api/v1/uom-status/**
-            - Path=/config-server-test/uom/**
+            - Path=/api/v1/uom/**, /api/v1/uom-status/**, /config-server-test/uom/**
         - id: inventory-service
           uri: lb://inventory-service
           predicates:

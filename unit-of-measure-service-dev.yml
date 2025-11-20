@@ -32,6 +32,3 @@ eureka:
       environment: development
       region: us-east
     prefer-ip-address: true
-
-uom:
-  property: Uom Service - this is the development profile - updated again

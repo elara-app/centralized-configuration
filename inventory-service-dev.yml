@@ -32,3 +32,5 @@ eureka:
       environment: development
       region: us-east
     prefer-ip-address: true
+inventory:
+  property: Inventory Service - v1 - Development

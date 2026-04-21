@@ -1,3 +1,8 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,busrefresh
 server:
   port: 0
 spring:
@@ -13,6 +18,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: localhost
+    port: 5672
 eureka:
   client:
     service-url:
@@ -24,6 +32,5 @@ eureka:
       environment: development
       region: us-east
     prefer-ip-address: true
-
 uom:
-  property: This is the development profile
+  property: UoM Service - v1 - Development

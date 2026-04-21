@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/elara-app/centralized-configuration)
+
 # Centralized Configuration for Elara Platform
 
 This repository provides version-controlled, environment-specific configuration for all Elara microservices. It is designed for use with a Spring Cloud Config Server (see [config-service](https://github.com/elara-app/config-service.git)), enabling dynamic, externalized configuration management across the platform.

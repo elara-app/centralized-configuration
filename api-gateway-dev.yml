@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 
 spring:
   cloud:
@@ -10,11 +10,34 @@ spring:
             locator:
               enabled: true
               lower-case-service-id: true
+              include-expression: serviceId.toLowerCase().contains('inventory-service') || serviceId.toLowerCase().contains('unit-of-measure-service')
+          routes:
+            - id: inventory-service
+              uri: lb://inventory-service
+              predicates:
+                - Path=/api/v1/inventory/**
+              filters:
+                - StripPrefix=3
+            - id: unit-of-measure-service
+              uri: lb://unit-of-measure-service
+              predicates:
+                - Path=/api/v1/uom/**
+              filters:
+                - StripPrefix=3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
     metadata-map:

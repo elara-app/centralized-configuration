@@ -2,16 +2,31 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,busrefresh
+        include: health,info,busrefresh,refresh
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+  info:
+    env:
+      enabled: true
 server:
-  port: 0
+  port: ${SERVER_PORT:8082}
 spring:
   cloud:
     vault:
       application-name: ${spring.application.name}
   datasource:
-    url: jdbc:postgresql://localhost:5432/unit_of_measure_db
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/unit_of_measure_db}
     driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,12 +34,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   rabbitmq:
-    host: localhost
-    port: 5672
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:guest}
+    password: ${SPRING_RABBITMQ_PASSWORD:guest}
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
     metadata-map:

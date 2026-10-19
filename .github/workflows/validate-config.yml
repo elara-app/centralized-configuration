@@ -27,7 +27,7 @@ jobs:
 
           files.each do |path|
             begin
-              YAML.safe_load_file(path, aliases: true)
+              Psych.parse_stream(File.read(path), filename: path)
               puts "YAML OK: #{path}"
             rescue Psych::Exception => e
               puts "::error file=#{path}::YAML parse failed: #{e.message}"

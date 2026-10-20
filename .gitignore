@@ -1,0 +1,9 @@
+# Environment files (real secrets never committed)
+.env
+.env.*
+!.env.example
+*.log
+
+# Production secrets are never versioned (DEV-ONLY policy for service-secrets/)
+service-secrets/*-prod-secrets.json
+service-secrets/*-prod-*.json

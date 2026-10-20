@@ -51,3 +51,6 @@ eureka:
     prefer-ip-address: true
 uom:
   property: UoM Service - v1 - Development
+logging:
+  level:
+    org.hibernate.SQL: DEBUG

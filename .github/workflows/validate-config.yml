@@ -1,0 +1,52 @@
+name: Validate configuration
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-config:
+    name: Validate config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Parse YAML files
+        shell: bash
+        run: |
+          set -euo pipefail
+          ruby -ryaml <<'RUBY'
+          files = Dir.glob("**/*.yml", File::FNM_DOTMATCH)
+                     .reject { |path| path == ".git" || path.start_with?(".git/") }
+                     .sort
+          abort "No YAML files found" if files.empty?
+
+          files.each do |path|
+            begin
+              Psych.parse_stream(File.read(path), filename: path)
+              puts "YAML OK: #{path}"
+            rescue Psych::Exception => e
+              puts "::error file=#{path}::YAML parse failed: #{e.message}"
+              exit 1
+            end
+          end
+          RUBY
+
+      - name: Require Eureka URI placeholder in dev configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=0
+          for file in api-gateway-dev.yml inventory-service-dev.yml unit-of-measure-service-dev.yml; do
+            if grep -qF "\${EUREKA_URI:" "$file"; then
+              echo "Eureka URI placeholder OK: $file"
+            else
+              echo "::error file=$file::Missing \${EUREKA_URI: placeholder"
+              status=1
+            fi
+          done
+          exit "$status"

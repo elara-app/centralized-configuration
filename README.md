@@ -21,16 +21,18 @@ This repository provides version-controlled, environment-specific configuration 
 
 Each file contains only non-sensitive, operational configuration: database URLs, RabbitMQ, Eureka, service metadata, etc. No secrets or credentials are stored in these YAMLs.
 
-## Service Secrets (`service-secrets/`)
+## Service Secrets (`service-secrets/`) — ⚠️ DEV-ONLY
 
-The `service-secrets/` directory contains default development credentials for each service, tracked in Git for convenience. **These are not production secrets and do not expose critical data.**
+**⚠️ DEV-ONLY — never production values.** The `service-secrets/` directory contains default development credentials for each service, tracked in Git for convenience. **These are not production secrets and do not expose critical data.**
 
 - `inventory-service-dev-secrets.json`: Default dev credentials for inventory-service
-- `uom-service-dev-secrets.json`: Default dev credentials for unit-of-measure-service
+- `unit-of-measure-service-dev-secrets.json`: Default dev credentials for unit-of-measure-service
 
 These files are loaded into Vault or a local dev secret store by the platform. They are safe to version control because they only contain non-critical, default values for local development and CI.
 
 **Best practice:** Never store real production secrets or sensitive credentials in this repository. Use Vault or a secure secret manager for all critical data.
+
+Enforcement: `service-secrets/*-prod-secrets.json` and `service-secrets/*-prod-*.json` are blocked by `.gitignore`; real secrets live only in Vault (see `elara/infra` repo, `scripts/setup-vault.sh`).
 
 ## Best Practices
 

@@ -25,6 +25,14 @@ spring:
               filters:
                 - StripPrefix=3
 
+springdoc:
+  swagger-ui:
+    urls:
+      - name: inventory
+        url: /api/v1/inventory/v3/api-docs
+      - name: uom
+        url: /api/v1/uom/v3/api-docs
+
 management:
   endpoints:
     web:

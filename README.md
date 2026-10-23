@@ -2,7 +2,7 @@
 
 # Elara Centralized Configuration
 
-This repository is the Git-backed configuration source for the Elara Config Server (`config-service`). It serves versioned, non-secret operational settings to three clients — `api-gateway`, `inventory-service` and `unit-of-measure-service` — and owns the gateway route table plus the dev-only Vault bootstrap inputs. It does not own Config Server behavior (`config-service/application.yml`), client bootstrap imports and profiles (each client JAR), container topology (`infra`), or production secrets (Vault).
+This repository is the Git-backed configuration source for the Elara Config Server (`config-service`). It serves versioned, non-secret operational settings to three clients — `api-gateway`, `inventory-service` and `unit-of-measure-service` — and owns the gateway route table plus the dev-only Vault bootstrap inputs. It does not own Config Server behavior (`config-service/application.yml`), client bootstrap imports and profiles (each client JAR), container topology (`infrastructure`), or production secrets (Vault).
 
 ## At a glance
 
@@ -27,7 +27,7 @@ Owns:
 Does not own:
 
 - Config Server Git URI/label, clone/force-pull behavior and server port — `config-service`; client bootstrap (`spring.config.import`, active profile, retry, Vault connection) — each client JAR.
-- Container hostnames, ports, credentials and the Vault loader — `infra` Compose and scripts.
+- Container hostnames, ports, credentials and the Vault loader — `infrastructure` Compose and scripts.
 - Production secrets — Vault at runtime. See [Secrets](#secrets).
 
 ## Serving model
@@ -110,7 +110,7 @@ Spring Boot resolution order is command line > Java system properties > OS envir
 1. Parses every `**/*.yml` file with Ruby `Psych.parse_stream` (including `.github/dependabot.yml`) and fails on syntax errors.
 2. Requires the literal `${EUREKA_URI:` in exactly `api-gateway-dev.yml`, `inventory-service-dev.yml` and `unit-of-measure-service-dev.yml`.
 
-There is no schema, unknown-key, duplicate-key, JSON, Vault-path, secret or profile-matrix check, and no Config Server startup test. The `infra` publish workflow fetches and re-checks the three dev files at the resolved `main` SHA.
+There is no schema, unknown-key, duplicate-key, JSON, Vault-path, secret or profile-matrix check, and no Config Server startup test. The `infrastructure` publish workflow fetches and re-checks the three dev files at the resolved `main` SHA.
 
 Run the same checks locally:
 
@@ -131,7 +131,7 @@ jq empty service-secrets/*.json
 5. Add `service-secrets/<name>-dev-secrets.json` (dotted keys) if Vault-backed credentials are needed; the path is `secret/<name>/dev`, no aliases.
 6. In the client JAR: Config Server import/profile/retry in `application.yml`, Vault import in `application-dev.yml`, Config Server/Vault disabled in `application-test.yml`.
 7. If externally exposed, add the explicit gateway route (`Path=/api/v1/<prefix>/**`, `lb://<name>`, `StripPrefix=3`), the Swagger URL, and the discovery-locator `include-expression`.
-8. Update both Compose files, the `infra` compose-check lists, the client README/AGENTS and this README's matrix. Merge to `main`: that is the served label.
+8. Update both Compose files, the `infrastructure` compose-check lists, the client README/AGENTS and this README's matrix. Merge to `main`: that is the served label.
 
 ## Add a profile
 
@@ -149,7 +149,7 @@ Static validation: run the three commands in [Validation and CI](#validation-and
 curl -s http://localhost:8888/inventory-service/dev | jq '.propertySources[].name'
 ```
 
-Full-stack verification (build, start, seed, smoke endpoints) is owned by `infra`; follow [infra/README.md#verify-the-stack](../infra/README.md#verify-the-stack). The source stack bind-mounts this repository into Config Server and serves committed Git only — commit before testing, because uncommitted working-tree edits are not served.
+Full-stack verification (build, start, seed, smoke endpoints) is owned by `infrastructure`; follow [infrastructure/README.md](https://github.com/elara-app/infrastructure#readme). The source stack bind-mounts this repository into Config Server and serves committed Git only — commit before testing, because uncommitted working-tree edits are not served.
 
 ## Current limitations
 
@@ -176,5 +176,5 @@ Full-stack verification (build, start, seed, smoke endpoints) is owned by `infra
 ## Documentation
 
 - [AGENTS.md](AGENTS.md) — agent commands, invariants, traps and definition of done.
-- [infra/README.md#verify-the-stack](../infra/README.md#verify-the-stack) — stack, ports, Vault bootstrap, full-stack verification.
+- [infrastructure/README.md](https://github.com/elara-app/infrastructure#readme) — stack, ports, Vault bootstrap, full-stack verification.
 - [config-service](https://github.com/elara-app/config-service) — Config Server behavior and endpoints; client repositories: [api-gateway](https://github.com/elara-app/api-gateway), [inventory-service](https://github.com/elara-app/inventory-service), [unit-of-measure-service](https://github.com/elara-app/unit-of-measure-service).

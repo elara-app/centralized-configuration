@@ -3,16 +3,15 @@
 ## Read first
 
 - [README.md](README.md) — profile matrix, property ownership, Vault paths, add-service and add-profile procedures. The README owns the matrix; do not duplicate it here.
-- [infra/README.md#verify-the-stack](../infra/README.md#verify-the-stack) — canonical full-stack build/start/verify commands.
-- [infra/README.md](../infra/README.md) — Vault bootstrap (`scripts/setup-vault.sh`), Compose stacks and ports.
+- [infrastructure/README.md](https://github.com/elara-app/infrastructure#readme) — canonical full-stack build/start/verify commands; Vault bootstrap (`scripts/setup-vault.sh`), Compose stacks and ports.
 - [config-service](https://github.com/elara-app/config-service) — Config Server endpoints, Git settings and `main` label.
 
 ## Scope and boundaries
 
 - This repository holds configuration only: per-service YAML, dev-only Vault bootstrap JSON, one CI workflow. There is no Maven build, no wrapper and no application code.
-- Edit YAML only through this repository. Client repos and `infra` must not fork or override these property files with copies.
+- Edit YAML only through this repository. Client repos and `infrastructure` must not fork or override these property files with copies.
 - Allowed changes: profile files, `service-secrets/*-dev-secrets.json`, `validate-config.yml`, `README.md`, `AGENTS.md`.
-- Not owned here: Config Server behavior (`config-service`), client bootstrap imports/profile/retry/Vault connection (each client JAR), container topology and credentials (`infra`), production secrets (Vault).
+- Not owned here: Config Server behavior (`config-service`), client bootstrap imports/profile/retry/Vault connection (each client JAR), container topology and credentials (`infrastructure`), production secrets (Vault).
 
 ## Quick facts
 
@@ -42,10 +41,10 @@ done
 jq empty service-secrets/*.json
 
 # Compose still interpolates with this repo mounted (no daemon needed)
-docker compose -f ../infra/compose.yml config --quiet
+docker compose -f ../infrastructure/compose.yml config --quiet
 ```
 
-Full-stack verification is owned by `infra`: [infra/README.md#verify-the-stack](../infra/README.md#verify-the-stack).
+Full-stack verification is owned by `infrastructure`: [infrastructure/README.md](https://github.com/elara-app/infrastructure#readme).
 
 ## Repository map
 
@@ -112,7 +111,7 @@ Full-stack verification is owned by `infra`: [infra/README.md#verify-the-stack](
 - Default label `main`: source stacks serve committed Git only, so even a committed `develop` branch is not served.
 - The gateway has no `refresh`/`busrefresh` endpoint; route changes need a restart.
 - The Vault loader is get-or-put and skips existing paths; after editing a dev JSON file, delete the path metadata before re-running.
-- The Eureka placeholder check and the `infra` publish preflight both hardcode the three dev files; a new dev file stays unchecked until CI is extended.
+- The Eureka placeholder check and the `infrastructure` publish preflight both hardcode the three dev files; a new dev file stays unchecked until CI is extended.
 
 ## Documentation maintenance
 
